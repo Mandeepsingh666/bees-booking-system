@@ -5,7 +5,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, HRFlowable, Image
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from app.config import settings
 
@@ -34,12 +34,26 @@ def generate_invoice_pdf(booking, room, promo_code=None) -> str:
     styles = getSampleStyleSheet()
     story = []
 
+    # Logo
+    logo_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+        "..", "frontend", "dist", "shelbees_suites_logo.png"
+    )
+    if os.path.isfile(logo_path):
+        logo = Image(logo_path, width=28 * mm, height=28 * mm)
+        logo.hAlign = "CENTER"
+        story.append(logo)
+        story.append(Spacer(1, 3 * mm))
+
     # Header
-    header_style = ParagraphStyle("header", fontSize=28, textColor=GOLD,
-                                   fontName="Helvetica-Bold", alignment=TA_CENTER)
-    sub_style = ParagraphStyle("sub", fontSize=11, textColor=DARK_GRAY,
-                                fontName="Helvetica", alignment=TA_CENTER)
+    header_style = ParagraphStyle("header", fontSize=24, textColor=GOLD,
+                                   fontName="Helvetica-Bold", alignment=TA_CENTER,
+                                   leading=30)
+    sub_style = ParagraphStyle("sub", fontSize=10, textColor=DARK_GRAY,
+                                fontName="Helvetica", alignment=TA_CENTER,
+                                leading=14)
     story.append(Paragraph("Shelbee's Suites", header_style))
+    story.append(Spacer(1, 2 * mm))
     story.append(Paragraph("Luxury Hotel &amp; Suites &bull; Georgetown, Guyana", sub_style))
     story.append(Spacer(1, 4 * mm))
     story.append(HRFlowable(width="100%", thickness=2, color=GOLD))

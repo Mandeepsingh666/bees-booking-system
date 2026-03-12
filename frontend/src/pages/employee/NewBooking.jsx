@@ -139,7 +139,7 @@ export default function NewBooking() {
               <label className="file-upload-area" style={{ display: 'block', cursor: 'pointer' }}>
                 <input type="file" accept="image/*,.pdf" onChange={e => setIdFile(e.target.files[0])} />
                 {idFile
-                  ? <p style={{ color: 'var(--navy)', fontWeight: 500 }}>📎 {idFile.name}</p>
+                  ? <p style={{ color: 'var(--gold)', fontWeight: 500 }}>📎 {idFile.name}</p>
                   : <p>Click to upload guest ID (JPG, PNG, or PDF)</p>
                 }
               </label>

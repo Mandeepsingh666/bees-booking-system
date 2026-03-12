@@ -28,7 +28,8 @@ export default function Login() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-logo">
-          <h1>Shellby Suits</h1>
+          <img src="/shelbees_suites_logo.png" alt="Shelbee's Suites" style={{width: '120px', height: '120px', objectFit: 'contain', marginBottom: '16px'}} />
+          <h1>Shelbee's Suites</h1>
           <p>Staff Management Portal</p>
         </div>
 

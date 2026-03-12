@@ -31,7 +31,7 @@ export default function OwnerDashboard() {
     <div>
       <div className="page-header">
         <h2>Owner Dashboard</h2>
-        <p>Overview of Shellby Suits performance</p>
+        <p>Overview of Shelbee's Suites performance</p>
       </div>
 
       <div className="stat-cards">
@@ -70,17 +70,17 @@ export default function OwnerDashboard() {
           {chartLoading ? <LoadingCenter /> : (
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#64748b' }} />
-                <YAxis yAxisId={0} tick={{ fontSize: 11, fill: '#64748b' }} allowDecimals={false} />
-                <YAxis yAxisId={1} orientation="right" tick={{ fontSize: 11, fill: '#64748b' }} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
+                <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#aaaaaa' }} />
+                <YAxis yAxisId={0} tick={{ fontSize: 11, fill: '#aaaaaa' }} allowDecimals={false} />
+                <YAxis yAxisId={1} orientation="right" tick={{ fontSize: 11, fill: '#aaaaaa' }} tickFormatter={v => `$${(v/1000).toFixed(0)}k`} />
                 <Tooltip
                   formatter={(value, name) => name === 'revenue' ? [`GYD $${Number(value).toLocaleString()}`, 'Revenue'] : [value, period === 'year' ? 'Bookings' : 'Occupied Rooms']}
                   labelStyle={{ fontWeight: 600 }}
-                  contentStyle={{ fontSize: '0.8rem', borderRadius: 6 }}
+                  contentStyle={{ fontSize: '0.8rem', borderRadius: 6, background: '#1c1c1c', border: '1px solid #2a2a2a', color: '#ffffff' }}
                 />
-                <Bar yAxisId={0} dataKey="occupied" fill="#0f172a" radius={[4, 4, 0, 0]} name="Occupied Rooms" />
-                <Bar yAxisId={1} dataKey="revenue" fill="#c9a84c" radius={[4, 4, 0, 0]} name="Revenue" />
+                <Bar yAxisId={0} dataKey="occupied" fill="#3a3a3a" radius={[4, 4, 0, 0]} name="Occupied Rooms" />
+                <Bar yAxisId={1} dataKey="revenue" fill="#C9A84C" radius={[4, 4, 0, 0]} name="Revenue" />
               </BarChart>
             </ResponsiveContainer>
           )}

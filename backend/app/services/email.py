@@ -15,7 +15,7 @@ def send_email(to: str, subject: str, body: str, attachment_path: Optional[str] 
 
     try:
         msg = MIMEMultipart()
-        msg["From"] = f"Shellby Suits <{settings.GMAIL_USER}>"
+        msg["From"] = f"Shelbee's Suites <{settings.GMAIL_USER}>"
         msg["To"] = to
         msg["Subject"] = subject
         msg.attach(MIMEText(body, "html"))
@@ -45,8 +45,8 @@ def booking_confirmation_guest(guest_name: str, booking_id: int, room_name: str,
     return f"""
     <html><body style="font-family: Arial, sans-serif; color: #333;">
     <div style="max-width:600px; margin:0 auto; border:1px solid #ddd; border-radius:8px; overflow:hidden;">
-      <div style="background:#0f172a; padding:24px; text-align:center;">
-        <h1 style="color:#c9a84c; margin:0;">Shellby Suits</h1>
+      <div style="background:#0a0a0a; padding:24px; text-align:center;">
+        <h1 style="color:#c9a84c; margin:0;">Shelbee's Suites</h1>
         <p style="color:#94a3b8; margin:4px 0 0;">Booking Confirmation</p>
       </div>
       <div style="padding:24px;">
@@ -61,7 +61,7 @@ def booking_confirmation_guest(guest_name: str, booking_id: int, room_name: str,
           <tr><td style="padding:8px; color:#666;">Payment</td><td style="padding:8px;">{payment_method.title()}</td></tr>
         </table>
         <p>Your invoice is attached to this email. We look forward to welcoming you!</p>
-        <p style="color:#666; font-size:14px;">Shellby Suits &mdash; Where Luxury Meets Comfort</p>
+        <p style="color:#666; font-size:14px;">Shelbee's Suites &mdash; Where Luxury Meets Comfort</p>
       </div>
     </div>
     </body></html>
@@ -74,7 +74,7 @@ def booking_alert_owner(guest_name: str, booking_id: int, room_name: str,
     return f"""
     <html><body style="font-family: Arial, sans-serif; color: #333;">
     <div style="max-width:600px; margin:0 auto;">
-      <div style="background:#0f172a; padding:24px;"><h1 style="color:#c9a84c; margin:0;">New Booking Alert</h1></div>
+      <div style="background:#0a0a0a; padding:24px;"><h1 style="color:#c9a84c; margin:0;">New Booking Alert</h1></div>
       <div style="padding:24px;">
         <p>A new booking has been created by <strong>{employee_name}</strong>.</p>
         <ul>
@@ -95,8 +95,8 @@ def cancellation_guest(guest_name: str, booking_id: int, room_name: str,
     return f"""
     <html><body style="font-family: Arial, sans-serif; color: #333;">
     <div style="max-width:600px; margin:0 auto; border:1px solid #ddd; border-radius:8px; overflow:hidden;">
-      <div style="background:#0f172a; padding:24px; text-align:center;">
-        <h1 style="color:#c9a84c; margin:0;">Shellby Suits</h1>
+      <div style="background:#0a0a0a; padding:24px; text-align:center;">
+        <h1 style="color:#c9a84c; margin:0;">Shelbee's Suites</h1>
         <p style="color:#94a3b8; margin:4px 0 0;">Booking Cancellation</p>
       </div>
       <div style="padding:24px;">
@@ -120,7 +120,7 @@ def cancellation_alert_owner(guest_name: str, booking_id: int, room_name: str,
     return f"""
     <html><body style="font-family: Arial, sans-serif; color: #333;">
     <div style="max-width:600px; margin:0 auto;">
-      <div style="background:#0f172a; padding:24px;"><h1 style="color:#c9a84c; margin:0;">Cancellation Alert</h1></div>
+      <div style="background:#0a0a0a; padding:24px;"><h1 style="color:#c9a84c; margin:0;">Cancellation Alert</h1></div>
       <div style="padding:24px;">
         <p>Booking #{booking_id} for <strong>{guest_name}</strong> has been cancelled by <strong>{employee_name}</strong>.</p>
         <ul>
@@ -139,7 +139,7 @@ def maintenance_alert_owner(location: str, description: str, priority: str,
     return f"""
     <html><body style="font-family: Arial, sans-serif; color: #333;">
     <div style="max-width:600px; margin:0 auto;">
-      <div style="background:#0f172a; padding:24px;"><h1 style="color:#c9a84c; margin:0;">Urgent Maintenance Issue</h1></div>
+      <div style="background:#0a0a0a; padding:24px;"><h1 style="color:#c9a84c; margin:0;">Urgent Maintenance Issue</h1></div>
       <div style="padding:24px;">
         <p>A new <strong style="color:#dc2626;">URGENT</strong> maintenance issue has been reported.</p>
         <ul>

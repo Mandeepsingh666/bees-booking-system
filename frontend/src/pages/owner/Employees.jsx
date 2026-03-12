@@ -71,7 +71,7 @@ export default function OwnerEmployees() {
               </div>
               <div className="form-group">
                 <label className="form-label required">Email</label>
-                <input className="form-control" type="email" value={form.email} onChange={set('email')} placeholder="john@shellbysuits.com" required />
+                <input className="form-control" type="email" value={form.email} onChange={set('email')} placeholder="john@shelbeessuites.com" required />
               </div>
               <div className="form-group">
                 <label className="form-label required">Password</label>

@@ -10,7 +10,7 @@ from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 from app.config import settings
 
 
-NAVY = colors.HexColor("#0f172a")
+NAVY = colors.HexColor("#0a0a0a")
 GOLD = colors.HexColor("#c9a84c")
 LIGHT_GRAY = colors.HexColor("#f8fafc")
 MID_GRAY = colors.HexColor("#e2e8f0")
@@ -39,7 +39,7 @@ def generate_invoice_pdf(booking, room, promo_code=None) -> str:
                                    fontName="Helvetica-Bold", alignment=TA_CENTER)
     sub_style = ParagraphStyle("sub", fontSize=11, textColor=DARK_GRAY,
                                 fontName="Helvetica", alignment=TA_CENTER)
-    story.append(Paragraph("Shellby Suits", header_style))
+    story.append(Paragraph("Shelbee's Suites", header_style))
     story.append(Paragraph("Luxury Hotel &amp; Suites &bull; Georgetown, Guyana", sub_style))
     story.append(Spacer(1, 4 * mm))
     story.append(HRFlowable(width="100%", thickness=2, color=GOLD))
@@ -172,8 +172,8 @@ def generate_invoice_pdf(booking, room, promo_code=None) -> str:
     story.append(Spacer(1, 4 * mm))
     footer_style = ParagraphStyle("footer", fontSize=9, textColor=DARK_GRAY,
                                    fontName="Helvetica", alignment=TA_CENTER)
-    story.append(Paragraph("Thank you for choosing Shellby Suits. We hope to see you again!", footer_style))
-    story.append(Paragraph("For enquiries: reservations@shellbysuits.com | +592-000-0000", footer_style))
+    story.append(Paragraph("Thank you for choosing Shelbee's Suites. We hope to see you again!", footer_style))
+    story.append(Paragraph("For enquiries: reservations@shelbeessuites.com | +592-000-0000", footer_style))
 
     doc.build(story)
     return pdf_path

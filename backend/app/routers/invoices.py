@@ -45,7 +45,7 @@ def generate_invoice(booking_id: int, db: Session = Depends(get_db),
     # Email to guest
     email_svc.send_email(
         to=booking.guest_email,
-        subject=f"Your Invoice #{booking.id} — Shellby Suits",
+        subject=f"Your Invoice #{booking.id} — Shelbee's Suites",
         body=email_svc.booking_confirmation_guest(
             booking.guest_name, booking.id, room.name,
             str(booking.check_in), str(booking.check_out),
@@ -72,5 +72,5 @@ def download_invoice(booking_id: int, db: Session = Depends(get_db),
     return FileResponse(
         invoice.pdf_path,
         media_type="application/pdf",
-        filename=f"shellby-suits-invoice-{booking_id}.pdf",
+        filename=f"shelbees-suites-invoice-{booking_id}.pdf",
     )

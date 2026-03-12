@@ -134,9 +134,9 @@ export default function BookingDetail() {
                 <Field label="Employee" value={booking.employee?.username} />
               </div>
               {isCancelled && (
-                <div style={{ marginTop: 16, background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 6, padding: '12px 14px' }}>
-                  <strong style={{ color: '#dc2626' }}>Cancellation Reason:</strong>
-                  <p style={{ color: '#7f1d1d', marginTop: 4, fontSize: '0.875rem' }}>{booking.cancellation_reason}</p>
+                <div style={{ marginTop: 16, background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.30)', borderRadius: 6, padding: '12px 14px' }}>
+                  <strong style={{ color: '#f87171' }}>Cancellation Reason:</strong>
+                  <p style={{ color: '#fca5a5', marginTop: 4, fontSize: '0.875rem' }}>{booking.cancellation_reason}</p>
                 </div>
               )}
             </div>

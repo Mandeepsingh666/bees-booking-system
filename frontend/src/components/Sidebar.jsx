@@ -31,7 +31,10 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
-        <h1>Shellby Suits</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+          <img src="/shelbees_suites_logo.png" alt="Shelbee's Suites" style={{width: '48px', height: '48px', objectFit: 'contain'}} />
+          <h1>Shelbee's Suites</h1>
+        </div>
         <p>{isOwner ? 'Owner Portal' : 'Staff Portal'}</p>
       </div>
 
@@ -89,7 +92,7 @@ export default function Sidebar() {
           <strong>{user?.username}</strong>
           {isOwner ? 'Owner' : 'Employee'}
         </div>
-        <button className="btn btn-outline btn-sm w-full" onClick={handleLogout} style={{ color: '#94a3b8', borderColor: '#334155' }}>
+        <button className="btn btn-outline btn-sm w-full" onClick={handleLogout} style={{ color: '#aaaaaa', borderColor: '#3a3a3a' }}>
           <Icon path={ICONS.logout} title="Logout" /> Logout
         </button>
       </div>

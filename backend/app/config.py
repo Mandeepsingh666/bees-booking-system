@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
     OWNER_USERNAME: str = "owner"
     OWNER_PASSWORD: str = "OwnerPass123!"
-    OWNER_EMAIL_DEFAULT: str = "owner@shellbysuits.com"
+    OWNER_EMAIL_DEFAULT: str = "owner@shelbeessuites.com"
 
     class Config:
         env_file = ".env"

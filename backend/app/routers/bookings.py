@@ -106,7 +106,7 @@ def create_booking(body: BookingCreate, db: Session = Depends(get_db),
         # Email guest
         email_svc.send_email(
             to=booking.guest_email,
-            subject=f"Booking Confirmation #{booking.id} — Shellby Suits",
+            subject=f"Booking Confirmation #{booking.id} — Shelbee's Suites",
             body=email_svc.booking_confirmation_guest(
                 booking.guest_name, booking.id, room.name,
                 str(booking.check_in), str(booking.check_out),
@@ -184,7 +184,7 @@ def cancel_booking(booking_id: int, body: CancelRequest, db: Session = Depends(g
     try:
         email_svc.send_email(
             to=booking.guest_email,
-            subject=f"Booking Cancellation #{booking.id} — Shellby Suits",
+            subject=f"Booking Cancellation #{booking.id} — Shelbee's Suites",
             body=email_svc.cancellation_guest(
                 booking.guest_name, booking.id, room.name if room else "N/A",
                 str(booking.check_in), body.reason

@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 from app.routers import auth, rooms, bookings, promo_codes, maintenance, invoices, employees, reports
 from app.config import settings
 
-app = FastAPI(title="Shellby Suits API", version="1.0.0")
+app = FastAPI(title="Shelbee's Suites API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,7 +34,7 @@ app.include_router(reports.router)
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "app": "Shellby Suits"}
+    return {"status": "ok", "app": "Shelbee's Suites"}
 
 
 # Serve frontend build (production) — must be last

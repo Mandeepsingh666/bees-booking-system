@@ -26,7 +26,7 @@ def send_email(to: str, subject: str, body: str, attachment_path: Optional[str] 
                 part["Content-Disposition"] = f'attachment; filename="{os.path.basename(attachment_path)}"'
                 msg.attach(part)
 
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as server:
             server.ehlo()
             server.starttls()
             server.login(settings.GMAIL_USER, settings.GMAIL_APP_PASSWORD)

@@ -45,4 +45,7 @@ if os.path.isdir(frontend_dist):
 
     @app.get("/{full_path:path}")
     def serve_spa(full_path: str):
+        file_path = os.path.join(frontend_dist, full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
         return FileResponse(os.path.join(frontend_dist, "index.html"))

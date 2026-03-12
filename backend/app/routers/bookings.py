@@ -1,7 +1,7 @@
 import os
 import uuid
 from datetime import date
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status, UploadFile, File, Query
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session, joinedload
 from typing import List, Optional
@@ -53,9 +53,49 @@ def list_bookings(
     return query.order_by(Booking.created_at.desc()).all()
 
 
+def _post_booking_tasks(booking_id: int, room_name: str, room_type: str,
+                         guest_email: str, guest_name: str, check_in: str,
+                         check_out: str, total: float, payment_method: str,
+                         employee_name: str, promo_code_obj, db: Session):
+    """Run PDF generation and emails in background after booking is saved."""
+    from app.database import SessionLocal
+    bg_db = SessionLocal()
+    try:
+        booking = _load_booking(bg_db, booking_id)
+        room = bg_db.query(Room).filter(Room.id == booking.room_id).first()
+        pdf_path = generate_invoice_pdf(booking, room, promo_code_obj)
+        invoice = Invoice(booking_id=booking_id, pdf_path=pdf_path)
+        bg_db.add(invoice)
+        bg_db.commit()
+
+        email_svc.send_email(
+            to=guest_email,
+            subject=f"Booking Confirmation #{booking_id} — Shelbee's Suites",
+            body=email_svc.booking_confirmation_guest(
+                guest_name, booking_id, room_name,
+                check_in, check_out, f"{total:,.2f}", payment_method
+            ),
+            attachment_path=pdf_path,
+        )
+
+        if settings.OWNER_EMAIL:
+            email_svc.send_email(
+                to=settings.OWNER_EMAIL,
+                subject=f"New Booking #{booking_id} — {guest_name}",
+                body=email_svc.booking_alert_owner(
+                    guest_name, booking_id, room_name,
+                    check_in, check_out, f"{total:,.2f}", employee_name
+                ),
+            )
+    except Exception as e:
+        print(f"[POST-BOOKING] Error: {e}")
+    finally:
+        bg_db.close()
+
+
 @router.post("", response_model=BookingOut, status_code=status.HTTP_201_CREATED)
-def create_booking(body: BookingCreate, db: Session = Depends(get_db),
-                   current_user=Depends(get_current_user)):
+def create_booking(body: BookingCreate, background_tasks: BackgroundTasks,
+                   db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     if body.check_out <= body.check_in:
         raise HTTPException(status_code=400, detail="Check-out must be after check-in")
 
@@ -96,38 +136,14 @@ def create_booking(body: BookingCreate, db: Session = Depends(get_db),
     db.commit()
     db.refresh(booking)
 
-    # Generate invoice PDF and send emails
-    try:
-        pdf_path = generate_invoice_pdf(booking, room, promo)
-        invoice = Invoice(booking_id=booking.id, pdf_path=pdf_path)
-        db.add(invoice)
-        db.commit()
-
-        # Email guest
-        email_svc.send_email(
-            to=booking.guest_email,
-            subject=f"Booking Confirmation #{booking.id} — Shelbee's Suites",
-            body=email_svc.booking_confirmation_guest(
-                booking.guest_name, booking.id, room.name,
-                str(booking.check_in), str(booking.check_out),
-                f"{float(total):,.2f}", booking.payment_method.value
-            ),
-            attachment_path=pdf_path,
-        )
-
-        # Email owner
-        if settings.OWNER_EMAIL:
-            email_svc.send_email(
-                to=settings.OWNER_EMAIL,
-                subject=f"New Booking #{booking.id} — {booking.guest_name}",
-                body=email_svc.booking_alert_owner(
-                    booking.guest_name, booking.id, room.name,
-                    str(booking.check_in), str(booking.check_out),
-                    f"{float(total):,.2f}", current_user.username
-                ),
-            )
-    except Exception as e:
-        print(f"[POST-BOOKING] Error: {e}")
+    background_tasks.add_task(
+        _post_booking_tasks,
+        booking.id, room.name, room.type,
+        booking.guest_email, booking.guest_name,
+        str(booking.check_in), str(booking.check_out),
+        float(total), booking.payment_method.value,
+        current_user.username, promo, db,
+    )
 
     return _load_booking(db, booking.id)
 

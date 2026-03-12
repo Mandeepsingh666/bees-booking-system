@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.so
+venv/
+.env
+.venv/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production.local
+
+# Uploads & generated files
+backend/uploads/*
+backend/pdfs/*
+!backend/uploads/.gitkeep
+!backend/pdfs/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Alembic - include migration files for deployment
+# backend/alembic/versions/*.py

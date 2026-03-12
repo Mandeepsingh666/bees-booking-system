@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shellby_suits
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/shellby_suits
+      SECRET_KEY: dev-secret-key-change-in-production
+      GMAIL_USER: ""
+      GMAIL_APP_PASSWORD: ""
+      OWNER_EMAIL: ""
+      OWNER_USERNAME: owner
+      OWNER_PASSWORD: OwnerPass123!
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/pdfs:/app/pdfs
+
+volumes:
+  postgres_data:

@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from app.routers import auth, rooms, bookings, promo_codes, maintenance, invoices, employees, reports
 from app.config import settings
@@ -40,4 +41,8 @@ def health():
 frontend_dist = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                               "..", "frontend", "dist")
 if os.path.isdir(frontend_dist):
-    app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="static")
+    app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    def serve_spa(full_path: str):
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
